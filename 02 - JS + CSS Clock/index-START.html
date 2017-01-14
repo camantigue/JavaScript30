@@ -1,3 +1,8 @@
+<!--
+  Notes:
+    * by default doing a transform rotate on the exact middle (which makes sense, but not for a clock hand)
+
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,13 +66,37 @@
       background:black;
       position: absolute;
       top:50%;
+
+      transform-origin: 100%; /* by default it's 50% (middle) */
+      transform: rotate(90deg);
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.96, 0.51, 0.84);
     }
 
   </style>
 
   <script>
+    const secondHand = document.querySelector('.second-hand');
+    const minHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
 
 
+    function setDate() {
+      const now = new Date();
+      const seconds = now.getSeconds();
+      const secondsDegrees = ((seconds / 60) * 360) + 90;
+      secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+
+      const mins = now.getMinutes();
+      const minsDegrees = ((mins / 60) * 360) + 90;
+      minHand.style.transform = `rotate(${minsDegrees}deg)`;
+
+      const hours = now.getMinutes();
+      const hoursDegrees = ((hours / 12) * 360) + 90;
+      hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
+    }
+
+    setInterval(setDate, 1000);
   </script>
 </body>
 </html>
