@@ -68,19 +68,16 @@
   </style>
 
   <script>
-    /*
-        querySelectorAll() returns a NodeList and not an Array (meaning we can't do stuff like map/reduce) and we do not need to convert it to an array as the prototype has a forEach method
-    */
-    const inputs = document.querySelectorAll('.controls input'); 
-
+    const inputs = document.querySelectorAll('.controls input');
+    
     function handleUpdate() {
-      // dataset is an objec that will contain the attributes from that specifc element
       const suffix = this.dataset.sizing || '';
       document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
     }
 
     inputs.forEach(input => input.addEventListener('change', handleUpdate));
     inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+    inputs.forEach(input => input.addEventListener('touchmove', handleUpdate));
   </script>
 
 </body>
